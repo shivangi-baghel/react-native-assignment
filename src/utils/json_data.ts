@@ -1,0 +1,1 @@
+export const PRESET_CATEGORIES = ['Workout', 'Study', 'Break', 'Cooking', 'Reading', 'Meditation', 'Work'];
