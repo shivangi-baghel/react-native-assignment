@@ -123,19 +123,6 @@ Displays individual timer with:
 - Control buttons (start/pause/reset/delete)
 - Halfway alert indicator
 
-### CategorySection
-Groups timers by category with:
-- Expandable/collapsible sections
-- Timer count and status summary
-- Bulk action buttons
-- Individual timer items
-
-### AddTimerModal
-Comprehensive timer creation with:
-- Form validation
-- Duration preview
-- Category selection with custom options
-- Halfway alert toggle
 
 ## State Management
 
@@ -157,23 +144,4 @@ The app uses StyleSheet for consistent styling with:
 - Responsive layouts
 - Theme-aware colors
 
-## Future Enhancements
 
-- Push notifications for timer completion
-- Timer templates and presets
-- Statistics and analytics
-- Cloud sync capabilities
-- Custom sound alerts
-- Widget support
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License.
