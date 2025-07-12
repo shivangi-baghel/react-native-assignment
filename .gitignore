@@ -35,6 +35,16 @@ local.properties
 !debug.keystore
 .kotlin/
 
+# Keystore
+android/app/my-release-key.keystore
+
+# Gradle properties with sensitive data
+android/gradle.properties
+
+# APK builds
+*.apk
+android/app/build/
+
 # node.js
 #
 node_modules/

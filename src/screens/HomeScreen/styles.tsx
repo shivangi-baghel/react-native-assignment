@@ -26,9 +26,8 @@ export const styles = StyleSheet.create({
     headerButton: {
       padding: 8,
       marginLeft: 8,
-    },
-    headerButtonText: {
-      fontSize: 18,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     filterIndicator: {
       flexDirection: 'row',
@@ -62,7 +61,7 @@ export const styles = StyleSheet.create({
       paddingHorizontal: 32,
     },
     emptyTitle: {
-      fontSize: 24,
+      fontSize: 40,
       fontWeight: '700',
       color: '#000000',
       marginBottom: 8,
@@ -115,9 +114,5 @@ export const styles = StyleSheet.create({
       shadowRadius: 4.65,
       elevation: 8,
     },
-    fabText: {
-      fontSize: 24,
-      color: '#FFFFFF',
-      fontWeight: '600',
-    },
+
   }); 

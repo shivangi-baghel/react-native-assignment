@@ -7,16 +7,16 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useApp } from '../../context/AppContext';
 import { CategorySection } from '../../components/CategorySection';
 import { AddTimerModal } from '../../components/AddTimerModal';
 import { TimerFilterModal } from '../../components/TimerFilterModal';
-import { helpers } from '../../utils/helpers';
-import { addSampleData } from '../../utils/sampleData';
+
 import { styles } from './styles';
 
 export const HomeScreen: React.FC = () => {
-  const { state, toggleTheme, exportData, addTimer } = useApp();
+  const { state, toggleTheme, exportData } = useApp();
   const [showAddModal, setShowAddModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -27,22 +27,6 @@ export const HomeScreen: React.FC = () => {
     Alert.alert('Export Data', 'Data prepared for export');
   };
 
-  // const handleAddSampleData = () => {
-  //   Alert.alert(
-  //     'Add Sample Data',
-  //     'This will add sample timers for testing. Continue?',
-  //     [
-  //       { text: 'Cancel', style: 'cancel' },
-  //       {
-  //         text: 'Add Sample Data',
-  //         onPress: () => {
-  //           addSampleData(addTimer);
-  //           Alert.alert('Success', 'Sample data added!');
-  //         },
-  //       },
-  //     ]
-  //   );
-  // };
 
   const searchByCategory = (category: string) => {
     setSelectedCategory(category);
@@ -78,11 +62,7 @@ export const HomeScreen: React.FC = () => {
         <TouchableOpacity style={styles.emptyButton} onPress={() => setShowAddModal(true)}>
           <Text style={styles.emptyButtonText}>Add Timer</Text>
         </TouchableOpacity>
-        {/* {selectedCategory === 'All' && state.timers.length === 0 && (
-          <TouchableOpacity style={styles.sampleButton} onPress={handleAddSampleData}>
-            <Text style={styles.sampleButtonText}>Add Sample Data</Text>
-          </TouchableOpacity>
-        )} */}
+       
       </View>
     </View>
   );
@@ -93,13 +73,17 @@ export const HomeScreen: React.FC = () => {
         <Text style={styles.title}>TimerSync</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity style={styles.headerButton} onPress={toggleTheme}>
-            <Text style={styles.headerButtonText}>{state.theme.isDark ? '☀️' : '🌙'}</Text>
+            <Icon 
+              name={state.theme.isDark ? 'light-mode' : 'dark-mode'} 
+              size={24} 
+              color={state.theme.isDark ? '#FFD700' : '#8E8E93'} 
+            />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton} onPress={() => setShowFilterModal(true)}>
-            <Text style={styles.headerButtonText}>🔍</Text>
+            <Icon name="search" size={24} color="#007AFF" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton} onPress={handleExport}>
-            <Text style={styles.headerButtonText}>📤</Text>
+            <Icon name="file-download" size={24} color="#007AFF" />
           </TouchableOpacity>
         </View>
       </View>
@@ -128,7 +112,7 @@ export const HomeScreen: React.FC = () => {
       )}
 
       <TouchableOpacity style={styles.fab} onPress={() => setShowAddModal(true)}>
-        <Text style={styles.fabText}>+</Text>
+        <Icon name="add" size={32} color="#FFFFFF" />
       </TouchableOpacity>
 
       <AddTimerModal visible={showAddModal} onClose={() => setShowAddModal(false)} />

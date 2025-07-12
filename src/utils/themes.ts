@@ -1,38 +1,37 @@
 import { Theme } from '../types';
+import Colors from './config/colors';
 
 export const lightTheme: Theme = {
   isDark: false,
   colors: {
-    primary: '#007AFF',
-    secondary: '#5856D6',
-    background: '#F2F2F7',
-    surface: '#FFFFFF',
-    text: '#000000',
-    textSecondary: '#8E8E93',
-    border: '#C6C6C8',
-    success: '#34C759',
-    warning: '#FF9500',
-    error: '#FF3B30',
-    progress: '#007AFF',
-    progressBackground: '#E5E5EA',
+   primary: Colors.primary,
+    secondary: Colors.secondary,
+    background: Colors.background,
+    text: Colors.text,
+    textSecondary: Colors.textSecondary,
+    border: Colors.border,
+    success: Colors.success,
+    warning: Colors.warning,
+    error: Colors.error,
+    progress: Colors.progress,
+    progressBackground: Colors.progressBackground,
   },
 };
 
 export const darkTheme: Theme = {
   isDark: true,
   colors: {
-    primary: '#0A84FF',
-    secondary: '#5E5CE6',
-    background: '#000000',
-    surface: '#1C1C1E',
-    text: '#FFFFFF',
-    textSecondary: '#8E8E93',
-    border: '#38383A',
-    success: '#30D158',
-    warning: '#FF9F0A',
-    error: '#FF453A',
-    progress: '#0A84FF',
-    progressBackground: '#38383A',
+    primary: Colors.primary_dark,
+    secondary: Colors.secondary_dark,
+    background: Colors.background_dark,
+    text: Colors.text_dark,
+    textSecondary: Colors.textSecondary,
+    border: Colors.border_dark,
+    success: Colors.success_dark,
+    warning: Colors.warning_dark,
+    error: Colors.error_dark,
+    progress: Colors.progress_dark,
+    progressBackground: Colors.progressBackground_dark,
   },
 };
 

@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export const AddTimerStyle = StyleSheet.create({
   container: {
@@ -144,7 +144,7 @@ export const AddTimerStyle = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-}); 
+});
 export const CategoryStyle = StyleSheet.create({
   container: {
     marginBottom: 16,
@@ -229,7 +229,7 @@ export const CategoryStyle = StyleSheet.create({
   timersContainer: {
     marginTop: 8,
   },
-}); 
+});
 export const CompletionStyle = StyleSheet.create({
   overlay: {
     flex: 1,
@@ -249,10 +249,7 @@ export const CompletionStyle = StyleSheet.create({
     shadowRadius: 8,
     elevation: 8,
   },
-  emoji: {
-    fontSize: 48,
-    marginBottom: 16,
-  },
+
   title: {
     fontSize: 24,
     fontWeight: '700',
@@ -446,11 +443,13 @@ export const TimerItemStyle = StyleSheet.create({
     padding: 8,
     borderRadius: 6,
     marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   alertText: {
     fontSize: 12,
     color: '#856404',
-    textAlign: 'center',
   },
   controls: {
     flexDirection: 'row',

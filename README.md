@@ -138,10 +138,27 @@ All data is automatically persisted to AsyncStorage and restored on app launch.
 ## Styling
 
 The app uses StyleSheet for consistent styling with:
-- Modern, clean design
-- Proper spacing and typography
-- Shadow effects and elevation
 - Responsive layouts
 - Theme-aware colors
+
+## Vector Icons
+
+The app uses `react-native-vector-icons` with Material Icons for consistent iconography:
+
+### Setup
+- **Android**: Fonts are automatically linked via `android/app/build.gradle`
+
+### Usage
+```typescript
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+// Usage in components
+<Icon name="timer" size={24} color="#007AFF" />
+```
+### Icons Used
+- **Timer**: `timer` - Main timer functionality
+- **History**: `history` - Timer history
+- **Warning**: `warning` - Halfway alerts
+- **Celebration**: `celebration` - Timer completion
 
 

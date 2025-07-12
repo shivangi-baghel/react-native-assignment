@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Timer } from '../types';
 import { useApp } from '../context/AppContext';
 import { helpers } from '../utils/helpers';
@@ -16,7 +11,7 @@ interface TimerItemProps {
 }
 
 export const TimerItem: React.FC<TimerItemProps> = ({ timer }) => {
-  const { startTimer, pauseTimer, resetTimer, deleteTimer,state } = useApp();
+  const { startTimer, pauseTimer, resetTimer, deleteTimer, state } = useApp();
   const handleStart = () => {
     startTimer(timer.id);
   };
@@ -35,8 +30,12 @@ export const TimerItem: React.FC<TimerItemProps> = ({ timer }) => {
       `Are you sure you want to delete "${timer.name}"?`,
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Delete', style: 'destructive', onPress: () => deleteTimer(timer.id) },
-      ]
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => deleteTimer(timer.id),
+        },
+      ],
     );
   };
 
@@ -77,17 +76,30 @@ export const TimerItem: React.FC<TimerItemProps> = ({ timer }) => {
           <Text style={TimerItemStyle.timerTime}>{formattedTime}</Text>
         </View>
         <View style={TimerItemStyle.statusContainer}>
-          <View style={[TimerItemStyle.statusDot, { backgroundColor: getStatusColor() }]} />
+          <View
+            style={[
+              TimerItemStyle.statusDot,
+              { backgroundColor: getStatusColor() },
+            ]}
+          />
           <Text style={TimerItemStyle.statusText}>{getStatusText()}</Text>
         </View>
       </View>
 
       <View style={TimerItemStyle.progressContainer}>
-        <View style={[TimerItemStyle.progressBar,{backgroundColor:`${state.theme.colors.progressBackground}`}]}>
+        <View
+          style={[
+            TimerItemStyle.progressBar,
+            { backgroundColor: `${state.theme.colors.progressBackground}` },
+          ]}
+        >
           <View
             style={[
               TimerItemStyle.progressFill,
-              { width: `${progress}%`,backgroundColor:`${state.theme.colors.progress}`},
+              {
+                width: `${progress}%`,
+                backgroundColor: `${state.theme.colors.progress}`,
+              },
             ]}
           />
         </View>
@@ -96,30 +108,47 @@ export const TimerItem: React.FC<TimerItemProps> = ({ timer }) => {
 
       {timer.hasHalfwayAlert && timer.halfwayAlertTriggered && (
         <View style={TimerItemStyle.alertContainer}>
-          <Text style={TimerItemStyle.alertText}>⚠️ Halfway alert triggered!</Text>
+          <Icon
+            name="warning"
+            size={16}
+            color="#FF9500"
+            style={{ marginRight: 4 }}
+          />
+          <Text style={TimerItemStyle.alertText}>Halfway alert triggered!</Text>
         </View>
       )}
 
       <View style={TimerItemStyle.controls}>
         {timer.status === 'running' ? (
-          <TouchableOpacity style={[TimerItemStyle.button, TimerItemStyle.pauseButton]} onPress={handlePause}>
+          <TouchableOpacity
+            style={[TimerItemStyle.button, TimerItemStyle.pauseButton]}
+            onPress={handlePause}
+          >
             <Text style={TimerItemStyle.buttonText}>Pause</Text>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity style={[TimerItemStyle.button, TimerItemStyle.startButton]} onPress={handleStart}>
+          <TouchableOpacity
+            style={[TimerItemStyle.button, TimerItemStyle.startButton]}
+            onPress={handleStart}
+          >
             <Text style={TimerItemStyle.buttonText}>Start</Text>
           </TouchableOpacity>
         )}
 
-        <TouchableOpacity style={[TimerItemStyle.button, TimerItemStyle.resetButton]} onPress={handleReset}>
+        <TouchableOpacity
+          style={[TimerItemStyle.button, TimerItemStyle.resetButton]}
+          onPress={handleReset}
+        >
           <Text style={TimerItemStyle.buttonText}>Reset</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[TimerItemStyle.button, TimerItemStyle.deleteButton]} onPress={handleDelete}>
+        <TouchableOpacity
+          style={[TimerItemStyle.button, TimerItemStyle.deleteButton]}
+          onPress={handleDelete}
+        >
           <Text style={TimerItemStyle.buttonText}>Delete</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
- 

@@ -17,12 +17,20 @@ type AppAction =
   | { type: 'CLEAR_HISTORY' }
   | { type: 'TOGGLE_CATEGORY'; payload: string }
   | { type: 'SET_THEME'; payload: boolean }
-  | { type: 'LOAD_DATA'; payload: { timers: Timer[]; history: TimerHistory[]; isDark: boolean } };
+  | {
+      type: 'LOAD_DATA';
+      payload: { timers: Timer[]; history: TimerHistory[]; isDark: boolean };
+    };
 
 interface AppContextType {
   state: AppState;
   dispatch: React.Dispatch<AppAction>;
-  addTimer: (name: string, duration: number, category: string, hasHalfwayAlert: boolean) => void;
+  addTimer: (
+    name: string,
+    duration: number,
+    category: string,
+    hasHalfwayAlert: boolean,
+  ) => void;
   startTimer: (id: string) => void;
   pauseTimer: (id: string) => void;
   resetTimer: (id: string) => void;
@@ -54,7 +62,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
 
     case 'UPDATE_TIMER': {
       const newTimers = state.timers.map(timer =>
-        timer.id === action.payload.id ? action.payload : timer
+        timer.id === action.payload.id ? action.payload : timer,
       );
       const newCategories = helpers.groupTimersByCategory(newTimers);
       return {
@@ -65,7 +73,9 @@ function appReducer(state: AppState, action: AppAction): AppState {
     }
 
     case 'DELETE_TIMER': {
-      const newTimers = state.timers.filter(timer => timer.id !== action.payload);
+      const newTimers = state.timers.filter(
+        timer => timer.id !== action.payload,
+      );
       const newCategories = helpers.groupTimersByCategory(newTimers);
       return {
         ...state,
@@ -78,7 +88,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
       const newTimers = state.timers.map(timer =>
         timer.id === action.payload
           ? { ...timer, status: 'running' as const, updatedAt: Date.now() }
-          : timer
+          : timer,
       );
       const newCategories = helpers.groupTimersByCategory(newTimers);
       return {
@@ -92,7 +102,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
       const newTimers = state.timers.map(timer =>
         timer.id === action.payload
           ? { ...timer, status: 'paused' as const, updatedAt: Date.now() }
-          : timer
+          : timer,
       );
       const newCategories = helpers.groupTimersByCategory(newTimers);
       return {
@@ -112,7 +122,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
               halfwayAlertTriggered: false,
               updatedAt: Date.now(),
             }
-          : timer
+          : timer,
       );
       const newCategories = helpers.groupTimersByCategory(newTimers);
       return {
@@ -128,8 +138,13 @@ function appReducer(state: AppState, action: AppAction): AppState {
 
       const newTimers = state.timers.map(t =>
         t.id === action.payload
-          ? { ...t, status: 'completed' as const, remainingTime: 0, updatedAt: Date.now() }
-          : t
+          ? {
+              ...t,
+              status: 'completed' as const,
+              remainingTime: 0,
+              updatedAt: Date.now(),
+            }
+          : t,
       );
 
       const newHistory: TimerHistory = {
@@ -161,7 +176,8 @@ function appReducer(state: AppState, action: AppAction): AppState {
           return {
             ...timer,
             remainingTime: newRemainingTime,
-            halfwayAlertTriggered: shouldTriggerHalfwayAlert || timer.halfwayAlertTriggered,
+            halfwayAlertTriggered:
+              shouldTriggerHalfwayAlert || timer.halfwayAlertTriggered,
             updatedAt: Date.now(),
           };
         }
@@ -194,7 +210,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
       const newCategories = state.categories.map(category =>
         category.name === action.payload
           ? { ...category, isExpanded: !category.isExpanded }
-          : category
+          : category,
       );
       return {
         ...state,
@@ -210,7 +226,9 @@ function appReducer(state: AppState, action: AppAction): AppState {
     }
 
     case 'LOAD_DATA': {
-      const newCategories = helpers.groupTimersByCategory(action.payload.timers);
+      const newCategories = helpers.groupTimersByCategory(
+        action.payload.timers,
+      );
       return {
         ...state,
         timers: action.payload.timers,
@@ -227,7 +245,9 @@ function appReducer(state: AppState, action: AppAction): AppState {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
   // Load data on app start
@@ -267,7 +287,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       state.timers.forEach(timer => {
         if (timer.status === 'running' && timer.remainingTime > 0) {
           dispatch({ type: 'TICK_TIMER', payload: timer.id });
-          
+
           // Check if timer completed
           if (timer.remainingTime <= 1) {
             dispatch({ type: 'COMPLETE_TIMER', payload: timer.id });
@@ -279,7 +299,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return () => clearInterval(interval);
   }, [state.timers]);
 
-  const addTimer = (name: string, duration: number, category: string, hasHalfwayAlert: boolean) => {
+  const addTimer = (
+    name: string,
+    duration: number,
+    category: string,
+    hasHalfwayAlert: boolean,
+  ) => {
     const newTimer: Timer = {
       id: helpers.generateId(),
       name,
@@ -325,11 +350,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const exportData = (): string => {
-    return JSON.stringify({
-      timers: state.timers,
-      history: state.history,
-      exportDate: new Date().toISOString(),
-    }, null, 2);
+    return JSON.stringify(
+      {
+        timers: state.timers,
+        history: state.history,
+        exportDate: new Date().toISOString(),
+      },
+      null,
+      2,
+    );
   };
 
   const value: AppContextType = {
@@ -355,4 +384,4 @@ export const useApp = (): AppContextType => {
     throw new Error('useApp must be used within an AppProvider');
   }
   return context;
-}; 
+};

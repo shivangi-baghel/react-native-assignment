@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
   Modal,
-  Alert,
   ScrollView,
 } from 'react-native';
 import { useApp } from '../context/AppContext';
@@ -14,8 +13,10 @@ import { AddTimerModalProps } from '../types';
 import { PRESET_CATEGORIES } from '../utils/json_data';
 import { AddTimerStyle } from './Styles';
 
-
-export const AddTimerModal: React.FC<AddTimerModalProps> = ({ visible, onClose }) => {
+export const AddTimerModal: React.FC<AddTimerModalProps> = ({
+  visible,
+  onClose,
+}) => {
   const { addTimer } = useApp();
   const [name, setName] = useState('');
   const [duration, setDuration] = useState('');
@@ -27,9 +28,9 @@ export const AddTimerModal: React.FC<AddTimerModalProps> = ({ visible, onClose }
   const handleCreateTimer = () => {
     const durationInSeconds = parseInt(duration, 10);
     // const selectedCategory = category === 'Custom' ? customCategory : category;
-    
+
     const validation = helpers.validateTimer(name, durationInSeconds, category);
-    
+
     if (!validation.isValid) {
       setErrors(validation.errors);
       return;
@@ -38,14 +39,14 @@ export const AddTimerModal: React.FC<AddTimerModalProps> = ({ visible, onClose }
     addTimer(name, durationInSeconds, category, hasHalfwayAlert);
     handleClose();
   };
-  const emptyState = ()=>{
+  const emptyState = () => {
     setName('');
     setDuration('');
     setCategory('');
     // setCustomCategory('');
     setHasHalfwayAlert(false);
     setErrors([]);
-  }
+  };
   const handleClose = () => {
     emptyState();
     onClose();
@@ -89,12 +90,18 @@ export const AddTimerModal: React.FC<AddTimerModalProps> = ({ visible, onClose }
       <View style={AddTimerStyle.container}>
         <View style={AddTimerStyle.header}>
           <Text style={AddTimerStyle.title}>Add New Timer</Text>
-          <TouchableOpacity onPress={handleClose} style={AddTimerStyle.closeButton}>
+          <TouchableOpacity
+            onPress={handleClose}
+            style={AddTimerStyle.closeButton}
+          >
             <Text style={AddTimerStyle.closeButtonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
 
-        <ScrollView style={AddTimerStyle.content} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={AddTimerStyle.content}
+          showsVerticalScrollIndicator={false}
+        >
           {errors.length > 0 && (
             <View style={AddTimerStyle.errorContainer}>
               {errors.map((error, index) => (
@@ -127,14 +134,20 @@ export const AddTimerModal: React.FC<AddTimerModalProps> = ({ visible, onClose }
               keyboardType="numeric"
             />
             {getDurationPreview() && (
-              <Text style={AddTimerStyle.durationPreview}>{getDurationPreview()}</Text>
+              <Text style={AddTimerStyle.durationPreview}>
+                {getDurationPreview()}
+              </Text>
             )}
           </View>
 
           <View style={AddTimerStyle.inputGroup}>
             <Text style={AddTimerStyle.label}>Category</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={AddTimerStyle.categoryScroll}>
-              {PRESET_CATEGORIES.map((cate) => (
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={AddTimerStyle.categoryScroll}
+            >
+              {PRESET_CATEGORIES.map(cate => (
                 <TouchableOpacity
                   key={cate}
                   style={[
@@ -146,17 +159,15 @@ export const AddTimerModal: React.FC<AddTimerModalProps> = ({ visible, onClose }
                   <Text
                     style={[
                       AddTimerStyle.categoryChipText,
-                      category === cate && AddTimerStyle.categoryChipTextSelected,
+                      category === cate &&
+                        AddTimerStyle.categoryChipTextSelected,
                     ]}
                   >
                     {cate}
                   </Text>
                 </TouchableOpacity>
               ))}
-         
             </ScrollView>
-
-           
           </View>
 
           <View style={AddTimerStyle.inputGroup}>
@@ -164,8 +175,15 @@ export const AddTimerModal: React.FC<AddTimerModalProps> = ({ visible, onClose }
               style={AddTimerStyle.checkboxContainer}
               onPress={() => setHasHalfwayAlert(!hasHalfwayAlert)}
             >
-              <View style={[AddTimerStyle.checkbox, hasHalfwayAlert && AddTimerStyle.checkboxChecked]}>
-                {hasHalfwayAlert && <Text style={AddTimerStyle.checkmark}>✓</Text>}
+              <View
+                style={[
+                  AddTimerStyle.checkbox,
+                  hasHalfwayAlert && AddTimerStyle.checkboxChecked,
+                ]}
+              >
+                {hasHalfwayAlert && (
+                  <Text style={AddTimerStyle.checkmark}>✓</Text>
+                )}
               </View>
               <Text style={AddTimerStyle.checkboxLabel}>Halfway Alert</Text>
             </TouchableOpacity>
@@ -176,7 +194,10 @@ export const AddTimerModal: React.FC<AddTimerModalProps> = ({ visible, onClose }
         </ScrollView>
 
         <View style={AddTimerStyle.footer}>
-          <TouchableOpacity style={AddTimerStyle.submitButton} onPress={handleCreateTimer}>
+          <TouchableOpacity
+            style={AddTimerStyle.submitButton}
+            onPress={handleCreateTimer}
+          >
             <Text style={AddTimerStyle.submitButtonText}>Create Timer</Text>
           </TouchableOpacity>
         </View>
@@ -184,4 +205,3 @@ export const AddTimerModal: React.FC<AddTimerModalProps> = ({ visible, onClose }
     </Modal>
   );
 };
- 

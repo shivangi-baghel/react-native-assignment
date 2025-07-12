@@ -21,7 +21,7 @@ export const HistoryScreen: React.FC = () => {
       [
         { text: 'Cancel', style: 'cancel' },
         { text: 'Clear', style: 'destructive', onPress: clearHistory },
-      ]
+      ],
     );
   };
 
@@ -56,7 +56,10 @@ export const HistoryScreen: React.FC = () => {
       <View style={styles.header}>
         <Text style={styles.title}>Timer History</Text>
         {state.history.length > 0 && (
-          <TouchableOpacity style={styles.clearButton} onPress={handleClearHistory}>
+          <TouchableOpacity
+            style={styles.clearButton}
+            onPress={handleClearHistory}
+          >
             <Text style={styles.clearButtonText}>Clear</Text>
           </TouchableOpacity>
         )}
@@ -66,7 +69,7 @@ export const HistoryScreen: React.FC = () => {
         <FlatList
           data={state.history}
           renderItem={renderHistoryItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.listContainer}
         />
@@ -76,5 +79,3 @@ export const HistoryScreen: React.FC = () => {
     </View>
   );
 };
-
- 

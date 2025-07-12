@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useApp } from '../context/AppContext';
 import { CategorySection } from '../components/CategorySection';
 import { AddTimerModal } from '../components/AddTimerModal';
@@ -72,13 +73,17 @@ export const HomeScreen: React.FC = () => {
         <Text style={styles.title}>TimerSync</Text>
         <View style={styles.headerActions}>
           <TouchableOpacity style={styles.headerButton} onPress={toggleTheme}>
-            <Text style={styles.headerButtonText}>{state.theme.isDark ? '☀️' : '🌙'}</Text>
+            <Icon 
+              name={state.theme.isDark ? 'light-mode' : 'dark-mode'} 
+              size={24} 
+              color={state.theme.isDark ? '#FFD700' : '#8E8E93'} 
+            />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton} onPress={() => setShowFilterModal(true)}>
-            <Text style={styles.headerButtonText}>🔍</Text>
+            <Icon name="search" size={24} color="#007AFF" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton} onPress={handleExport}>
-            <Text style={styles.headerButtonText}>📤</Text>
+            <Icon name="file-download" size={24} color="#007AFF" />
           </TouchableOpacity>
         </View>
       </View>
@@ -107,7 +112,7 @@ export const HomeScreen: React.FC = () => {
       )}
 
       <TouchableOpacity style={styles.fab} onPress={() => setShowAddModal(true)}>
-        <Text style={styles.fabText}>+</Text>
+        <Icon name="add" size={32} color="#FFFFFF" />
       </TouchableOpacity>
 
       <AddTimerModal visible={showAddModal} onClose={() => setShowAddModal(false)} />
@@ -148,9 +153,8 @@ const styles = StyleSheet.create({
   headerButton: {
     padding: 8,
     marginLeft: 8,
-  },
-  headerButtonText: {
-    fontSize: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   filterIndicator: {
     flexDirection: 'row',
@@ -237,9 +241,5 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 8,
   },
-  fabText: {
-    fontSize: 24,
-    color: '#FFFFFF',
-    fontWeight: '600',
-  },
+
 }); 

@@ -36,7 +36,7 @@ export const TimerFilterModal: React.FC<TimerFilterModalProps> = ({
   const filteredCategories = React.useMemo(() => {
     if (!searchQuery.trim()) return categories;
     return categories.filter(category =>
-      category.toLowerCase().includes(searchQuery.toLowerCase())
+      category.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   }, [categories, searchQuery]);
 
@@ -52,24 +52,37 @@ export const TimerFilterModal: React.FC<TimerFilterModalProps> = ({
 
   const renderCategoryItem = ({ item }: { item: string }) => {
     const isSelected = currentFilter === item;
-    const timerCount = state.timers.filter(timer => timer.category === item).length;
+    const timerCount = state.timers.filter(
+      timer => timer.category === item,
+    ).length;
 
     return (
       <TouchableOpacity
-        style={[TimerFilterStyle.categoryItem, isSelected && TimerFilterStyle.selectedCategoryItem]}
+        style={[
+          TimerFilterStyle.categoryItem,
+          isSelected && TimerFilterStyle.selectedCategoryItem,
+        ]}
         onPress={() => handleCategorySelect(item)}
       >
         <View style={TimerFilterStyle.categoryInfo}>
-          <Text style={[TimerFilterStyle.categoryName, isSelected && TimerFilterStyle.selectedCategoryText]}>
+          <Text
+            style={[
+              TimerFilterStyle.categoryName,
+              isSelected && TimerFilterStyle.selectedCategoryText,
+            ]}
+          >
             {item}
           </Text>
-          <Text style={[TimerFilterStyle.timerCount, isSelected && TimerFilterStyle.selectedCategoryText]}>
+          <Text
+            style={[
+              TimerFilterStyle.timerCount,
+              isSelected && TimerFilterStyle.selectedCategoryText,
+            ]}
+          >
             {timerCount} timer{timerCount !== 1 ? 's' : ''}
           </Text>
         </View>
-        {isSelected && (
-          <Text style={TimerFilterStyle.checkmark}>✓</Text>
-        )}
+        {isSelected && <Text style={TimerFilterStyle.checkmark}>✓</Text>}
       </TouchableOpacity>
     );
   };
@@ -84,7 +97,10 @@ export const TimerFilterModal: React.FC<TimerFilterModalProps> = ({
       <View style={TimerFilterStyle.container}>
         <View style={TimerFilterStyle.header}>
           <Text style={TimerFilterStyle.title}>Filter by Category</Text>
-          <TouchableOpacity onPress={onClose} style={TimerFilterStyle.closeButton}>
+          <TouchableOpacity
+            onPress={onClose}
+            style={TimerFilterStyle.closeButton}
+          >
             <Text style={TimerFilterStyle.closeButtonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
@@ -102,20 +118,37 @@ export const TimerFilterModal: React.FC<TimerFilterModalProps> = ({
         <FlatList
           data={filteredCategories}
           renderItem={renderCategoryItem}
-          keyExtractor={(item) => item}
+          keyExtractor={item => item}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={TimerFilterStyle.listContainer}
           ListHeaderComponent={
             <TouchableOpacity
-              style={[TimerFilterStyle.categoryItem, currentFilter === 'All' && TimerFilterStyle.selectedCategoryItem]}
+              style={[
+                TimerFilterStyle.categoryItem,
+                currentFilter === 'All' &&
+                  TimerFilterStyle.selectedCategoryItem,
+              ]}
               onPress={handleClearFilter}
             >
               <View style={TimerFilterStyle.categoryInfo}>
-                <Text style={[TimerFilterStyle.categoryName, currentFilter === 'All' && TimerFilterStyle.selectedCategoryText]}>
+                <Text
+                  style={[
+                    TimerFilterStyle.categoryName,
+                    currentFilter === 'All' &&
+                      TimerFilterStyle.selectedCategoryText,
+                  ]}
+                >
                   All Categories
                 </Text>
-                <Text style={[TimerFilterStyle.timerCount, currentFilter === 'All' && TimerFilterStyle.selectedCategoryText]}>
-                  {state.timers.length} timer{state.timers.length !== 1 ? 's' : ''}
+                <Text
+                  style={[
+                    TimerFilterStyle.timerCount,
+                    currentFilter === 'All' &&
+                      TimerFilterStyle.selectedCategoryText,
+                  ]}
+                >
+                  {state.timers.length} timer
+                  {state.timers.length !== 1 ? 's' : ''}
                 </Text>
               </View>
               {currentFilter === 'All' && (
@@ -125,7 +158,9 @@ export const TimerFilterModal: React.FC<TimerFilterModalProps> = ({
           }
           ListEmptyComponent={
             <View style={TimerFilterStyle.emptyContainer}>
-              <Text style={TimerFilterStyle.emptyText}>No categories found</Text>
+              <Text style={TimerFilterStyle.emptyText}>
+                No categories found
+              </Text>
             </View>
           }
         />
@@ -133,4 +168,3 @@ export const TimerFilterModal: React.FC<TimerFilterModalProps> = ({
     </Modal>
   );
 };
-

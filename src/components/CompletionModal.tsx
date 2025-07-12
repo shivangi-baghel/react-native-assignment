@@ -1,10 +1,6 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Modal,
-} from 'react-native';
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { CompletionStyle } from './Styles';
 
 interface CompletionModalProps {
@@ -27,7 +23,12 @@ export const CompletionModal: React.FC<CompletionModalProps> = ({
     >
       <View style={CompletionStyle.overlay}>
         <View style={CompletionStyle.modal}>
-          <Text style={CompletionStyle.emoji}>🎉</Text>
+          <Icon
+            name="celebration"
+            size={48}
+            color="#34C759"
+            style={{ marginBottom: 16 }}
+          />
           <Text style={CompletionStyle.title}>Timer Complete!</Text>
           <Text style={CompletionStyle.message}>
             Congratulations! You've completed "{timerName}"
@@ -40,4 +41,3 @@ export const CompletionModal: React.FC<CompletionModalProps> = ({
     </Modal>
   );
 };
-
