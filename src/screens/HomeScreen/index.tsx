@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   FlatList,
   TouchableOpacity,
   Alert,
@@ -14,6 +13,7 @@ import { AddTimerModal } from '../../components/AddTimerModal';
 import { TimerFilterModal } from '../../components/TimerFilterModal';
 
 import { styles } from './styles';
+import Colors from '../../utils/config/colors';
 
 export const HomeScreen: React.FC = () => {
   const { state, toggleTheme, exportData } = useApp();
@@ -22,10 +22,23 @@ export const HomeScreen: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   const handleExport = () => {
+    if (!hasCompletedTimers) {
+      Alert.alert('No Data to Export', 'Complete some timers first to export data.');
+      return;
+    }
+    
     const data = exportData();
-    console.log('exported Data :', data)
-    Alert.alert('Export Data', 'Data prepared for export');
+    console.log('exported Data :', data);
+    
+    const timerCount = state.history.length;
+    Alert.alert(
+      'Export Data', 
+      `Successfully prepared ${timerCount} completed timer${timerCount !== 1 ? 's' : ''} for export.`
+    );
   };
+
+  // Check if there are completed timers to export
+  const hasCompletedTimers = state.history && state.history.length > 0;
 
 
   const searchByCategory = (category: string) => {
@@ -76,15 +89,17 @@ export const HomeScreen: React.FC = () => {
             <Icon 
               name={state.theme.isDark ? 'light-mode' : 'dark-mode'} 
               size={24} 
-              color={state.theme.isDark ? '#FFD700' : '#8E8E93'} 
+              color={state.theme.isDark ? Colors.sun : Colors.moon} 
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton} onPress={() => setShowFilterModal(true)}>
-            <Icon name="search" size={24} color="#007AFF" />
+            <Icon name="search" size={24} color={Colors.search} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.headerButton} onPress={handleExport}>
-            <Icon name="file-download" size={24} color="#007AFF" />
-          </TouchableOpacity>
+          {hasCompletedTimers && (
+            <TouchableOpacity style={styles.headerButton} onPress={handleExport}>
+                <Icon name="file-download" size={24} color={Colors.download} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
 
